@@ -1,22 +1,27 @@
 CC = gcc
-
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -Iinclude
 
 TARGET = bank
 
-SOURCES = main.c client.c
+SRC_DIR = src
+BUILD_DIR = build
+INCLUDE_DIR = include
 
-OBJECTS = $(patsubst %.c, %.o, $(SOURCES))
+SOURCES = $(wildcard $(SRC_DIR)/*.c)
+
+OBJECTS = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SOURCES))
+
+all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@
 
-%.o: %.c
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 .PHONY: clean
 clean:
-	-rm -f $(TARGET) $(OBJECTS)
-
-.PHONY: all
-all: $(TARGET)
+	-rm -rf $(BUILD_DIR) $(TARGET)

@@ -1,4 +1,6 @@
 bank
 *.o
 /build/
+/compile_commands.json
 ${TARGET}
+.cache

@@ -41,3 +41,17 @@ int rollback_transaction(sqlite3 *db) {
 
   return 0;
 }
+
+int exec_sql(sqlite3 *db, const char *sql) {
+	char *err_msg = NULL;
+
+	if (sqlite3_exec(db, sql, NULL, NULL, &err_msg) != SQLITE_OK) {
+		fprintf(stderr, "SQL execution failed: %s\nQuery: %s\n", err_msg, sql);
+		rollback_transaction(db);
+		sqlite3_free(err_msg);
+
+		return -1;
+	}
+
+	return 0;
+}

@@ -30,16 +30,17 @@ int commit_transaction(sqlite3 *db) {
 }
 
 int rollback_transaction(sqlite3 *db) {
-  char *err_msg = NULL;
+    char *err_msg = NULL;
+    int rc = sqlite3_exec(db, "ROLLBACK", NULL, NULL, &err_msg);
 
-  if (sqlite3_exec(db, "ROLLBACK", NULL, NULL, &err_msg) != SQLITE_OK) {
-    fprintf(stderr, "ROLLBACK failed: %s\n", err_msg);
-    sqlite3_free(err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "CRITICAL: ROLLBACK failed: %s\n", err_msg);
+        sqlite3_free(err_msg);
 
-    return -1;
-  }
+        return -1;
+    }
 
-  return 0;
+    return 0;
 }
 
 int exec_sql(sqlite3 *db, const char *sql) {

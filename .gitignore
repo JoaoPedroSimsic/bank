@@ -1,5 +1,6 @@
 bank
 *.o
+*.db
 /build/
 /compile_commands.json
 ${TARGET}

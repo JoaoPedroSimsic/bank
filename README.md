@@ -1,3 +1,3 @@
-This project relies on sqlite3, be sure it's installed in your system.
+This project relies on SQLite3; be sure it's installed on your system.
 
-Also, the makefile is set to the gcc compiler, if using other c compiler, please change the CC to your desired compiler.
+Also, the Makefile is set to the GCC compiler. If you use another C compiler, please change the CC variable to your desired compiler.
